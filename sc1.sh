@@ -1,6 +1,21 @@
 #!/bin/bash
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+ip=$(hostname -I | awk '{print $1}')
+####
+clear
+######
+###############
+echo -n "ingrese el correo para el servidor:"
+read mail
+###############
+echo -n ingrese la dns1:
+read dns1
+############
+echo -n ingrese la dns2:
+read dns2
+##############
+
 
 echo "####### PRE-CONFIGURACION CWP ##########"
 echo "### Desactivando yum-cron ###"
@@ -47,7 +62,7 @@ sed -i 's/^CC_IGNORE = .*/CC_IGNORE = ""/g' /etc/csf/csf.conf
 sed -i 's/^SMTP_BLOCK = .*/SMTP_BLOCK = "1"/g' /etc/csf/csf.conf
 sed -i 's/^SMTP_ALLOWGROUP = .*/SMTP_ALLOWGROUP = "mail,mailman,postfix"/g' /etc/csf/csf.conf
 
-sed -i 's/^LF_ALERT_TO = .*/LF_ALERT_TO = "alexalvarez@powerhost.cl"/g' /etc/csf/csf.conf
+sed -i 's/^LF_ALERT_TO = .*/LF_ALERT_TO = "$mail"/g' /etc/csf/csf.conf
 sed -i 's/^LF_FTPD = .*/LF_FTPD = "30"/g' /etc/csf/csf.conf
 sed -i 's/^LF_SMTPAUTH = .*/LF_SMTPAUTH = "90"/g' /etc/csf/csf.conf
 sed -i 's/^LF_EXIMSYNTAX = .*/LF_EXIMSYNTAX = "0"/g' /etc/csf/csf.conf
@@ -195,6 +210,14 @@ echo "### Configurando Postfix ###"
 sed -i '/^inet_protocols.*/d' /etc/postfix/main.cf
 echo "inet_protocols = all" >> /etc/postfix/main.cf
 service postfix restart
+
+echo "### Modificacion de CWP ###"
+
+mysql << EOF
+use root_cwp
+UPDATE `nameserver` SET `ns1_name` = '$dns1', `ns1_ip` = '$ip', `ns2_name` = '$dns2', `ns2_ip` = '$ip' WHERE `nameserver`.`id` = 1;
+UPDATE `settings` SET `root_email` = '$mail', `shared_ip` = '$ip' WHERE `settings`.`id` = 1;
+EOF
 
 
 history -c
