@@ -4,15 +4,15 @@ CWD="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOSTNAME=$(hostname -f)
 
 echo "####### PRE-CONFIGURACION CWP ##########"
-echo "Desactivando yum-cron..."
+echo "### Desactivando yum-cron ###"
 yum erase yum-cron -y
 
 echo "####### INSTALANDO CWP #######"
 if [ -d /usr/local/cwpsrv/ ]; then
-        echo "CWP ya detectado"
+        echo "### CWP ya detectado ####"
         sleep 10
 else
-	echo "Se va a instalar CWP"
+	echo "#### Se va a instalar CWP ####"
 	sleep 15
         cd /usr/local/src; wget http://centos-webpanel.com/cwp-el7-latest; sh cwp-el7-latest
 	exit 1
@@ -38,7 +38,7 @@ fi
 echo "### Configurando CSF ###"
 
 sed -i 's/^TESTING = .*/TESTING = "0"/g' /etc/csf/csf.conf
-sed -i 's/^RESTRICT_SYSLOG = 0/RESTRICT_SYSLOG = "3"/g' /etc/csf/csf.conf
+sed -i 's/^RESTRICT_SYSLOG = "0"/RESTRICT_SYSLOG = "3"/g' /etc/csf/csf.conf
 sed -i 's/^ICMP_IN = .*/ICMP_IN = "0"/g' /etc/csf/csf.conf
 sed -i 's/^IPV6 = .*/IPV6 = "0"/g' /etc/csf/csf.conf
 sed -i 's/^DENY_IP_LIMIT = .*/DENY_IP_LIMIT = "400"/g' /etc/csf/csf.conf
