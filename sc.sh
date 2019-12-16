@@ -210,19 +210,19 @@ echo "#######################################"
 echo "### ajuste y Seguridad en el kernel ###"
 echo "#######################################"
 
-# Cambie los siguientes parámetros cuando una alta tasa de solicitudes de conexión entrantes provoque fallas en la conexión #
+echo " parámetros cuando una alta tasa de solicitudes de conexión entrantes provoque fallas en la conexión"
 echo "100000" > /proc/sys/net/core/netdev_max_backlog
-# Tamaño de la cola de escucha para aceptar nuevas conexiones TCP (predeterminado: 128) #
+echo "Tamaño de la cola de escucha para aceptar nuevas conexiones TCP (predeterminado: 128) #"
 echo "4096" > /proc/sys/net/core/somaxconn
-# Número máximo de sockets en TIME-WAIT que se mantendrán simultáneamente (predeterminado: 180000) #
+echo " Número máximo de sockets en TIME-WAIT que se mantendrán simultáneamente (predeterminado: 180000) #"
 echo "600000" > /proc/sys/net/ipv4/tcp_max_tw_buckets
-# establece el búfer de recepción de socket máximo para todos los protocolos (en bytes) #
+echo " establece el búfer de recepción de socket máximo para todos los protocolos (en bytes) #"
 echo "16777216" > /proc/sys/net/core/rmem_max
 echo "16777216" > /proc/sys/net/core/rmem_default
-# establece el búfer de envío de socket máximo para todos los protocolos (en bytes) #
+echo "Establece el búfer de envío de socket máximo para todos los protocolos (en bytes) #"
 echo "16777216" > /proc/sys/net/core/wmem_max
 echo "16777216" > /proc/sys/net/core/wmem_default
-# Establecer límites de búfer TCP de autoajuste de Linux #
+echo "Establecer límites de búfer TCP de autoajuste de Linux #"
 echo "4096 87380 16777216" > /proc/sys/net/ipv4/tcp_rmem
 echo "4096 87380 16777216" > /proc/sys/net/ipv4/tcp_wmem
 echo "0" > /proc/sys/net/ipv4/tcp_sack
@@ -242,46 +242,46 @@ echo "30" > /proc/sys/net/ipv4/tcp_fin_timeout
 # A veces, la reordenación de paquetes en una red puede interpretarse como pérdida de paquetes y, por lo tanto, aumentar el valor de este parámetro debería mejorar el rendimiento (el valor predeterminado es "3")
 echo "15" > /proc/sys/net/ipv4/tcp_reordering
 echo "cubic" > /proc/sys/net/ipv4/tcp_congestion_control
-# Este valor varía según la memoria total del sistema. Úselo sabiamente en diferentes situaciones
+# Este valor varía según la memoria total del sistema.
 echo "262144" > /proc/sys/net/ipv4/tcp_max_orphans
 
-# Deshabilitar volcados de núcleo
+echo " Deshabilitar volcados de núcleo"
 echo "0" > /proc/sys/fs/suid_dumpable
-# Habilitar ExecShield
+echo " Habilitar ExecShield "
 echo "1" > /proc/sys/kernel/randomize_va_space
 
 echo "### Parámetros de red para una mejor seguridad ###"
-# Deshabilitar el reenvío de paquetes (si esta máquina no es un enrutador)
+echo " Deshabilitar el reenvío de paquetes (si no es un enrutador)"
 echo "0" > /proc/sys/net/ipv4/ip_forward
 echo "0" > /proc/sys/net/ipv4/conf/all/send_redirects
 echo "0" > /proc/sys/net/ipv4/conf/default/send_redirects
-# Habilite tcp_syncookies para aceptar conexiones legítimas ante un ataque de inundación SYN
+echo "Habilite tcp_syncookies para aceptar conexiones legítimas ante un ataque de inundación SYN"
 echo "1" > /proc/sys/net/ipv4/tcp_syncookies
-# Desactívelo para deshabilitar las características del protocolo IPv4 que se consideran que tienen pocos usos legítimos y que son fáciles de abusar
+echo " deshabilitan las características del protocolo IPv4 que se consideran que tienen pocos usos legítimos y que son fáciles de abusar."
 echo "0" > /proc/sys/net/ipv4/conf/all/accept_source_route
 echo "0" > /proc/sys/net/ipv4/conf/default/accept_source_route
 echo "0" > /proc/sys/net/ipv4/conf/all/accept_redirects
 echo "0" > /proc/sys/net/ipv4/conf/default/accept_redirects
 echo "0" > /proc/sys/net/ipv4/conf/all/secure_redirects
 echo "0" > /proc/sys/net/ipv4/conf/default/secure_redirects
-# Registre paquetes sospechosos (esto debe desactivarse si el sistema sufre demasiados registros)
+echo " Registra paquetes sospechosos (esto debe desactivarse si el sistema sufre demasiados registros)"
 echo "1" > /proc/sys/net/ipv4/conf/all/log_martians
-# Proteger de ataques ICMP
+echo " Proteger de ataques ICMP"
 echo "1" > /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts
-# Habilite la validación de fuente recomendada por RFC (no debe usarse en máquinas que son enrutadores para redes muy complicadas)
+echo " Habilite la validación de fuente recomendada por RFC"
 echo "1" > /proc/sys/net/ipv4/conf/all/rp_filter
 echo "1" > /proc/sys/net/ipv4/conf/default/rp_filter
-# Aumente el rango de puertos IPv4 para aceptar más conexiones
-echo  "5000 65535" > /proc/sys/net/ipv4/ip_local_port_range
+#echo " Aumenta el rango de puertos IPv4 para aceptar más conexiones"
+#echo  "5000 65535" > /proc/sys/net/ipv4/ip_local_port_range
 
-# Deshabilitar IPV6
+echo " Deshabilitar IPV6"
 echo "1" > /proc/sys/net/ipv6/conf/all/disable_ipv6
 echo "1" > /proc/sys/net/ipv6/conf/default/disable_ipv6
 # # 
-# ### Ajuste del sistema de archivos
-# Aumentar el límite del descriptor de archivo del sistema
+echo  "### Ajuste del sistema de archivos ###"
+echo " Aumenta el límite del descriptor de archivo del sistema"
 echo "7930900" > /proc/sys/fs/file-max
-# Permitir más PID
+echo "Permitir más PID"
 echo "65536" > /proc/sys/kernel/pid_max
 # Use hasta 95% de RAM (5% gratis)
 echo "5" > /proc/sys/vm/swappiness
