@@ -25,6 +25,7 @@ iptables-save > /root/firewall.rules
 
     echo "nameserver 200.73.112.15" > /etc/resolv.conf
     echo "nameserver 200.73.112.16" >> /etc/resolv.conf
+    chattr +i /etc/resolv.conf
 	
 echo "configurando ssh"
 
